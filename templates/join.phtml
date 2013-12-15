@@ -1,4 +1,4 @@
-<form role="form" class="row col-xs-12 col-sm-6 col-sm-offset-3" method="post">
+<form role="form" class="ajax row col-xs-12 col-sm-6 col-sm-offset-3" method="post" action="/user/create" onsubmit="return false">
 	<h1>Sign up <small>Fast and free!</small></h1>
 	<?php
 	echo $this->html->div(
@@ -7,7 +7,19 @@
 			'label'       => 'Email Address',
 			'name'        => 'email',
 			'class'       => 'form-control input-lg email required',
-			'placeholder' => 'Enter your email',
+			'placeholder' => 'Your email address, double check it!',
+		))
+	);
+
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->input(array(
+			'label'       => 'Username',
+			'name'        => 'username',
+			'class'       => 'form-control input-lg required',
+			'minlength'   => 4,
+			'maxlength'   => 50,
+			'placeholder' => 'At least four letters or numbers',
 		))
 	);
 
@@ -18,7 +30,7 @@
 			'name'        => 'password',
 			'class'       => 'form-control input-lg required',
 			'minlength'   => 8,
-			'placeholder' => 'Enter your password',
+			'placeholder' => 'Use symbols along with letters and numbers',
 		))
 	);
 	?>
