@@ -120,6 +120,10 @@ $config = array(
 	),
 
 	// }}}
+	'site' => array(
+		'name'   => 'LeaderBin',
+		'domain' => 'leaderbin.com',
+	),
 );
 
 ?>
