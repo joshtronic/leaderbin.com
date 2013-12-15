@@ -43,11 +43,28 @@
 				</div>
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="/">Home</a></li>
-						<li><a href="/about">About</a></li>
-						<li><a href="/contact">Contact</a></li>
-						<li><a href="/login">Sign in</a></li>
-						<li><a href="/join">Sign up</a></li>
+						<?php
+						$links = array(
+							'/'        => 'Home',
+							'/about'   => 'About',
+							'/contact' => 'Contact',
+							'/login'   => 'Sign in',
+							'/join'    => 'Sign up',
+						);
+
+						foreach ($links as $uri => $label)
+						{
+							$active = '';
+
+							if (($uri == '/' && $_REQUEST['request'] == 'home')
+								|| substr($uri, 1) == $_REQUEST['request'])
+							{
+								$active = ' class="active"';
+							}
+
+							echo '<li' . $active . '><a href="' . $uri . '">' . $label . '</a></li>';
+						}
+						?>
 					</ul>
 				</div>
 			</div>
