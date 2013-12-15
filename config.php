@@ -31,11 +31,11 @@ $config = array(
 
 	'pickles' => array(
 		'disabled'        => false,
-		'session'         => 'files',
+		'session'         => false,
 		'template'        => 'index',
 		'module'          => 'home',
 		//'404'             => 'error/404',
-		'datasource'      => 'mysql',
+		'datasource'      => false,
 		'cache'           => 'memcached',
 		'profiler'        => array(
 			'local'       => false,
@@ -56,21 +56,6 @@ $config = array(
 
 	'datasources' => array(
 		'local' => array(
-			'memcached' => array(
-				'type'      => 'memcache',
-				'hostname'  => 'localhost',
-				'port'      => 11211,
-				'namespace' => 'ELLBEE',
-			),
-			'mysql' => array(
-				'type'     => 'mysql',
-				'driver'   => 'pdo_mysql',
-				'hostname' => 'localhost',
-				'username' => 'root',
-				'password' => '',
-				'database' => 'leaderbin',
-				'cache'    => false,
-			),
 			'redis' => array(
 				'type'      => 'redis',
 				'hostname'  => 'localhost',
@@ -80,21 +65,6 @@ $config = array(
 			),
 		),
 		'production' => array(
-			'memcached' => array(
-				'type'      => 'memcache',
-				'hostname'  => 'localhost',
-				'port'      => 11211,
-				'namespace' => 'ELLBEE',
-			),
-			'mysql' => array(
-				'type'     => 'mysql',
-				'driver'   => 'pdo_mysql',
-				'hostname' => 'localhost',
-				'username' => 'leaderbin',
-				'password' => '9f48580930bdcaf13c1888cd946e809e75ab8d90',
-				'database' => 'leaderbin',
-				'cache'    => false,
-			),
 			'redis' => array(
 				'type'      => 'redis',
 				'hostname'  => 'localhost',

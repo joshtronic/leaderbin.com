@@ -1,8 +1,8 @@
 <?php
 
-class User extends Model
+class User extends RedisModel
 {
-	protected $table = 'users';
+
 }
 
 ?>
