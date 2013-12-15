@@ -1,0 +1,26 @@
+<form role="form" class="row col-xs-12 col-sm-6 col-sm-offset-3" method="post">
+	<h1>Sign in <small>Welcome back!</small></h1>
+	<?php
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->inputEmail(array(
+			'label'       => 'Email Address',
+			'name'        => 'email',
+			'class'       => 'form-control input-lg email required',
+			'placeholder' => 'Enter your email',
+		))
+	);
+
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->inputPassword(array(
+			'label'       => 'Password',
+			'name'        => 'password',
+			'class'       => 'form-control input-lg required',
+			'minlength'   => 8,
+			'placeholder' => 'Enter your password',
+		))
+	);
+	?>
+	<button type="submit" class="btn btn-success btn-lg">Authenticate</button>
+</form>
