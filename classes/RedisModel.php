@@ -85,6 +85,16 @@ class RedisModel extends Object
 			switch ($base)
 			{
 				case 'set':
+					if (isset($arguments[1]))
+					{
+						$arguments = $arguments[1];
+					}
+					else
+					{
+						$key = $this->key(substr($name, 3));
+						var_dump($key, $arguments);
+					}
+
 					$arguments = array($key, $arguments[1]);
 					break;
 

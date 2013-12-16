@@ -38,7 +38,7 @@ class user_create extends AnonymousModule
 			$uid = $user->nextUID();
 
 			// Generates the auth token
-			$auth_token = sha1(mt_rand() . microtime());
+			$auth_token = $user->generateToken();
 
 			// Writes the user data
 			$user->set($uid, array(
