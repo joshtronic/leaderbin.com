@@ -24,14 +24,24 @@ class RedisModel extends Object
 		return strtolower(implode(':', $parts));
 	}
 
+	public function mappingKey($variable, $value)
+	{
+		return $this->key($variable, $value, 'uid');
+	}
+
 	public function nextUID()
 	{
 		return $this->redis->incr($this->key('uid'));
 	}
 
-	public function getUID($variable, $value)
+	public function setMapping($variable, $value, $uid)
 	{
-		return $this->redis->get($this->key($variable, $value, 'uid'));
+		$this->redis->set($this->mappingKey($variable, $value), $uid);
+	}
+
+	public function getMapping($variable, $value)
+	{
+		return $this->redis->get($this->mappingKey($variable, $value));
 	}
 
 	public function __call($name, $arguments)

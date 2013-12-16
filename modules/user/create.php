@@ -23,19 +23,12 @@ class user_create extends CustomModule
 	{
 		try
 		{
-			$_POST = array(
-				'email'    => 'foo@bar.com',
-				'username' => 'fubar',
-				'password' => 'insecure123',
-			);
-
-
 			$user = new User();
 
 			// Checks if the email or username is already in use
 			foreach (array('email', 'username') as $field)
 			{
-				if ($user->getUID($field, $_POST[$field]))
+				if ($user->getMapping($field, $_POST[$field]))
 				{
 					return array('error' => 'The ' . $field . ' is already in use.');
 				}
@@ -44,15 +37,25 @@ class user_create extends CustomModule
 			// Grabs the next UID
 			$uid = $user->nextUID();
 
+			// Generates the auth token
+			$auth_token = sha1(mt_rand() . microtime());
+
 			// Writes the user data
-			$user->set('1001', array(
+			$user->set($uid, array(
 				'username' => $_POST['username'],
 				'email'    => $_POST['email'],
 				'password' => crypt($_POST['password'], '$2y$11$' . String::random(22) . '$'),
+				'auth'     => $auth_token,
 			));
 
-			// Sets up the authentication cookie
-			//$user->setAuth()
+			// Sets the UID mappings
+			$user->setMapping('username', $_POST['username'], $uid);
+			$user->setMapping('email',    $_POST['email'],    $uid);
+
+			// Sets a cookie with the UID and auth token
+			setcookie('auth', $uid . '|' . $auth_token, Time::YEAR);
+
+			return array('status' => 'success', 'url' => '/');
 		}
 		catch (RedisException $e)
 		{
