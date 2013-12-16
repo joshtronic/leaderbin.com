@@ -12,7 +12,7 @@ class CustomRedis extends Object
 
 			try
 			{
-				$this->redis = new Redis();
+				$this->redis = parent::getInstance('Redis'); // new Redis();
 				$this->redis->connect($datasource['hostname'], $datasource['port']);
 				$this->redis->setOption(Redis::OPT_PREFIX, $datasource['namespace'] . ':');
 				$this->redis->select($datasource['database']);
@@ -22,6 +22,8 @@ class CustomRedis extends Object
 				exit('There was error connecting to Redis :(');
 			}
 		}
+
+		//var_dump($name, $arguments);
 
 		return call_user_func_array(array($this->redis, $name), $arguments);
 	}
