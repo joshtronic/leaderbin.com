@@ -1,23 +1,23 @@
 <?php
 
-class user_create extends CustomModule
+class user_create extends AnonymousModule
 {
-//	protected $ajax     = true;
-//	protected $method   = 'POST';
-//	protected $validate = array(
-//		'email' => array(
-//			'length:>:100'           => 'Email addresses may not be more than 100 characters.',
-//			'filter:email'           => 'Your email address is invalid.',
-//		),
-//		'username' => array(
-//			'length:<:4'             => 'Usernames may not be less than 4 characters.',
-//			'length:>:30'            => 'Usernames may not be more than 50 characters.',
-//			'regex:is:/[^a-z0-9]+/i' => 'Usernames may only contain letters and numbers.',
-//		),
-//		'password' => array(
-//			'length:<:8'             => 'Passwords may not be less than 8 characters.',
-//		),
-//	);
+	protected $ajax     = true;
+	protected $method   = 'POST';
+	protected $validate = array(
+		'email' => array(
+			'length:>:100'           => 'Email addresses may not be more than 100 characters.',
+			'filter:email'           => 'Your email address is invalid.',
+		),
+		'username' => array(
+			'length:<:4'             => 'Usernames may not be less than 4 characters.',
+			'length:>:30'            => 'Usernames may not be more than 50 characters.',
+			'regex:is:/[^a-z0-9]+/i' => 'Usernames may only contain letters and numbers.',
+		),
+		'password' => array(
+			'length:<:8'             => 'Passwords may not be less than 8 characters.',
+		),
+	);
 
 	public function __default()
 	{
@@ -53,7 +53,7 @@ class user_create extends CustomModule
 			$user->setMapping('email',    $_POST['email'],    $uid);
 
 			// Sets a cookie with the UID and auth token
-			setcookie('auth', $uid . '|' . $auth_token, Time::YEAR);
+			setcookie('__auth', base64_encode($uid . '|' . $auth_token), time() + Time::YEAR, '/');
 
 			return array('status' => 'success', 'url' => '/');
 		}
