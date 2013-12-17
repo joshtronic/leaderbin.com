@@ -44,20 +44,24 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<?php
-						$links = array(
-							'/'        => 'Home',
-							'/about'   => 'About',
-							'/contact' => 'Contact',
-						);
 
 						if (User::isAuthenticated())
 						{
-							$links['/logout'] = 'Logout';
+							$links = array(
+								'/leaderboards' => 'My Leaderboards',
+								'/contact'      => 'Contact Us',
+								'/logout'       => 'Logout',
+							);
 						}
 						else
 						{
-							$links['/login'] = 'Sign in';
-							$links['/join']  = 'Sign up';
+							$links = array(
+								'/'        => 'Home',
+								'/about'   => 'About',
+								'/contact' => 'Contact Us',
+								'/login'   => 'Sign In',
+								'/join'    => 'Sign Up',
+							);
 						}
 
 						foreach ($links as $uri => $label)
