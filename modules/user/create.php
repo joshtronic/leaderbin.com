@@ -58,13 +58,30 @@ class user_create extends AnonymousModule
 				'auth'     => $auth_token,
 			));
 
+			// Creates an API key for the user
+			$api_key = false;
+
+			while (!$api_key)
+			{
+				$new_key   = sha1(microtime() . mt_rand());
+				$redis_key = 'user:api:' . $new_key;
+
+				if ($this->redis->get($redis_key) === false)
+				{
+					$api_key = $new_key;
+					$this->redis->set($redis_key, $api_key);
+				}
+			}
+
+			$mapping_fields[] = 'user:api:' . $api_key;
+
 			// Sets the UID mappings
-			$this->redis->mset(array_combine($mapping_fields, array($uid, $uid)));
+			$this->redis->mset(array_combine($mapping_fields, array($uid, $uid, $uid)));
 
 			// Sets a cookie with the UID and auth token
 			setcookie('__auth', base64_encode($uid . '|' . $auth_token), time() + Time::YEAR, '/');
 
-			return array('status' => 'success', 'url' => '/');
+			return array('status' => 'success', 'url' => '/leaderboards');
 		}
 		catch (Exception $e)
 		{

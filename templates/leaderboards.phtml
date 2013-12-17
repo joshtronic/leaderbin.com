@@ -1,3 +1,19 @@
-<h1>My Leaderboards</h1>
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<h1>My Leaderboards</h1>
+	</div>
+	<div class="col-xs-12 col-sm-6 text-right">
+		<a class="btn btn-success" href="/leaderboard/new">New Leaderboard</a>
+	</div>
+</div>
 
+<?php
+if ($this->module['leaderboards'])
+{
 
+}
+else
+{
+	echo '<div class="lead">You have no leaderboards, <a href="/leaderboard/new">want to create one?</a></div>';
+}
+?>

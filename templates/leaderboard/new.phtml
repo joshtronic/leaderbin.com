@@ -1,0 +1,17 @@
+<form role="form" class="ajax row col-xs-12 col-sm-6 col-sm-offset-3" method="post" action="/leaderboard/create" onsubmit="return false">
+	<h1>New Leaderboard</h1>
+	<?php
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->input(array(
+			'label'        => 'Name',
+			'name'         => 'name',
+			'class'        => 'form-control input-lg required',
+			'placeholder'  => 'What shall we call this leaderboard?',
+			'autocomplete' => 'off',
+			'autofocus'    => 'autofocus',
+		))
+	);
+	?>
+	<button type="submit" class="btn btn-success btn-lg">Make it so!</button>
+</form>

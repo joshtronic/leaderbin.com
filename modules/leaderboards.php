@@ -5,7 +5,7 @@ class leaderboards extends UserModule
 	public function __default()
 	{
 		// Grabs the user's leaderboards
-		$leaders = '';
+		$leaderboards = array();
 
 		return array('leaderboards' => $leaderboards);
 	}

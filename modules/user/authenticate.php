@@ -28,7 +28,7 @@ class user_authenticate extends AnonymousModule
 				setcookie('__auth', base64_encode($uid . '|' . $user['auth']), time() + Time::YEAR, '/');
 			}
 
-			return array('status' => 'success', 'url' => '/');
+			return array('status' => 'success', 'url' => '/leaderboards');
 		}
 
 		return array('error' => 'Invalid email address or password.');
