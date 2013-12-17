@@ -1,0 +1,75 @@
+<?php
+$site = $this->config->site['name'];
+$url  = 'http://' . $this->config->site['domain'] . '/api/';
+?>
+
+<h1><?php echo $site; ?> REST API v1.0</h1>
+
+<h2>Introduction</h2>
+
+<p class="lead">The <?php echo $site; ?> API is designed to allow you the easily interact with the leaderboards in your <?php echo $site; ?> account. We provide all the tools required to push member data to your leaderboards and pull back your members scores and ranks.</p>
+
+<?php
+if ($this->module['api_key'])
+{
+	?>
+	<p class="lead">
+		Before we get started, here’s your API key:
+		<span class="label label-primary"><?php echo $this->module['api_key']; ?></span>
+	</p>
+	<?php
+}
+?>
+
+<h2>URL Prefix</h2>
+
+<p class="lead">All <?php echo $site; ?> API calls start with <span class="label label-primary"><?php echo $url; ?>{version}</span> where <span class="label label-primary">{version}</span> corresponds to the version of the API you would like to use.</p>
+
+<p class="lead">The current version of the <?php echo $site; ?> API is <span class="label label-primary">v1.0</span></p>
+
+<?php $url .= 'v1.0/'; ?>
+
+<h2>Authentication</h2>
+
+<p class="lead">You cannot reach the <?php echo $site; ?> API without including an API key in your request. For the sake of consistency, the API key must be transmitted as part of the query string of URL regardless of the HTTP method being used with the call:</p>
+
+<p class="lead"><span class="label label-primary"><?php echo $url; ?>{endpoint}?key={key}</span> where <span class="label label-primary">{endpoint}</span> is the call being made and <span class="label label-primary">{key}</span> is your API key.</p>
+
+
+<h2>Endpoints</h2>
+
+<h3>/leaderboards</h3>
+
+<h4>GET</h4>
+
+<p class="lead">Returns a list of all of the leaderboards associated with the account. The API equivalent of the <a href="/leaderboards" target="_blank">My Leaderboards</a> page.</p>
+
+<h3>/leaderboard/{uid}</h3>
+
+<h4>GET</h4>
+
+<p class="lead">Returns the members, scores and ranks sorted in descending order by score.</p>
+
+<p class="lead"><span class="label label-primary">{uid}</span> corresponds with the UID found on the <a href="/leaderboards" target="_blank">My Leaderboards</a> page.</p>
+
+<h3>/leaderboard/{uid}/member/{member}</h3>
+
+<p class="lead">The value of <span class="label label-primary">{member}</span> is a unique indicator you are using in your system. It can be anything you want it to be as long as it’s unique within your system.</p>
+
+<p class="lead">We highly recommend using something that won’t change in the future like an auto incremented field from your database.</p>
+
+<h4>GET</h4>
+
+<p class="lead">Returns the score and rank for the <span class="label label-primary">{member}</span> specified.</p>
+
+<h4>POST</h4>
+
+<p class="lead">The POST method allows you set the score of the <span class="label label-primary">{member}</span> by passing the <span class="label label-primary">{score}</span> parameter.</p>
+
+<p class="lead">The <span class="label label-primary">score</span> must be an integer.</p>
+
+<h4>PUT</h4>
+
+<p class="lead">The PUT method allows you to increment the score of the specified <span class="label label-primary">{member}</span> by 1 point. If the <span class="label label-primary">{member}</span> does not exist, the score will be be set to 1 point. If you would like to increase by more than one, or decrement the score, include the <span class="label label-primary">value</span> parameter.</p>
+
+<p class="lead">The optional <span class="label label-primary">value</span> must be an integer.</p>

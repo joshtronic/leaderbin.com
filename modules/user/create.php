@@ -50,14 +50,6 @@ class user_create extends AnonymousModule
 			// Generates the auth token
 			$auth_token = sha1(microtime());
 
-			// Writes the user data
-			$this->redis->hmset('user:' . $uid, array(
-				'username' => $_POST['username'],
-				'email'    => $_POST['email'],
-				'password' => crypt($_POST['password'], '$2y$11$' . String::random(22) . '$'),
-				'auth'     => $auth_token,
-			));
-
 			// Creates an API key for the user
 			$api_key = false;
 
@@ -72,6 +64,15 @@ class user_create extends AnonymousModule
 					$this->redis->set($redis_key, $api_key);
 				}
 			}
+
+			// Writes the user data
+			$this->redis->hmset('user:' . $uid, array(
+				'username' => $_POST['username'],
+				'email'    => $_POST['email'],
+				'password' => crypt($_POST['password'], '$2y$11$' . String::random(22) . '$'),
+				'auth'     => $auth_token,
+				'api'      => $api_key,
+			));
 
 			$mapping_fields[] = 'user:api:' . $api_key;
 
