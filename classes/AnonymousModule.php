@@ -6,7 +6,7 @@ class AnonymousModule extends CustomModule
 	{
 		parent::__construct();
 
-		if (User::isAuthenticated())
+		if ($this->uid)
 		{
 			Browser::goHome();
 		}

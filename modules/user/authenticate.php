@@ -16,28 +16,19 @@ class user_authenticate extends AnonymousModule
 
 	public function __default()
 	{
-		try
+		// Checks if the email supplied is valid
+		if ($uid = $this->redis->get('user:email:' . trim($_POST['email'])))
 		{
-			$user = new User();
+			// Grabs the password hash and auth token
+			$user = $this->redis->hmget('user:' . $uid, array('password', 'auth'));
 
-			// Checks if the email supplied is valid
-			if ($uid = $user->getMapping('email', $_POST['email']))
+			// Checks if the password is valid
+			if ($user['password'] == crypt($_POST['password'], $user['password']))
 			{
-				// Checks if the password is valid
-				$password = $user->getPassword($uid);
-
-				if ($password == crypt($_POST['password'], $password))
-				{
-					$auth_token = $user->getAuth($uid);
-					setcookie('__auth', base64_encode($uid . '|' . $auth_token), time() + Time::YEAR, '/');
-				}
+				setcookie('__auth', base64_encode($uid . '|' . $user['auth']), time() + Time::YEAR, '/');
 			}
 
 			return array('status' => 'success', 'url' => '/');
-		}
-		catch (RedisException $e)
-		{
-			return array('error' => $e->getMessage());
 		}
 
 		return array('error' => 'Invalid email address or password.');

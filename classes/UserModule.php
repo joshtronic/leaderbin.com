@@ -6,7 +6,7 @@ class UserModule extends CustomModule
 	{
 		parent::__construct();
 
-		if (!User::isAuthenticated())
+		if (!$this->uid)
 		{
 			Browser::redirect('/login');
 		}

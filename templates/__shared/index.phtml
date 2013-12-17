@@ -44,8 +44,7 @@
 				<div class="collapse navbar-collapse pull-right">
 					<ul class="nav navbar-nav">
 						<?php
-
-						if (User::isAuthenticated())
+						if (isset($this->module['uid']))
 						{
 							$links = array(
 								'/leaderboards' => 'My Leaderboards',

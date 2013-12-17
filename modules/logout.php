@@ -4,8 +4,7 @@ class logout extends UserModule
 {
 	public function __default()
 	{
-		$user = new User();
-		$user->setAuth($user->getAuthenticated('uid'), $user->generateToken());
+		$this->redis->hset('user:' . $this->uid, sha1(microtime()));
 
 		setcookie('__auth', '', time() - Time::YEAR, '/');
 

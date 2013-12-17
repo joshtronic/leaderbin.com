@@ -21,27 +21,37 @@ class user_create extends AnonymousModule
 
 	public function __default()
 	{
+		// Removes any stray whitespace
+		$_POST['email']    = trim($_POST['email']);
+		$_POST['username'] = trim($_POST['username']);
+
 		try
 		{
-			$user = new User();
+			$mapping_fields = array(
+				'user:email:'    . $_POST['email'],
+				'user:username:' . $_POST['username'],
+			);
 
 			// Checks if the email or username is already in use
-			foreach (array('email', 'username') as $field)
+			$existing = $this->redis->mget($mapping_fields);
+
+			if ($existing[0])
 			{
-				if ($user->getMapping($field, $_POST[$field]))
-				{
-					return array('error' => 'The ' . $field . ' is already in use.');
-				}
+				throw new Exception('The email address is already in use.');
+			}
+			elseif ($existing[1])
+			{
+				throw new Exception('The username is already in use.');
 			}
 
 			// Grabs the next UID
-			$uid = $user->nextUID();
+			$uid = $this->redis->incr('user:uid');
 
 			// Generates the auth token
-			$auth_token = $user->generateToken();
+			$auth_token = sha1(microtime());
 
 			// Writes the user data
-			$user->set($uid, array(
+			$this->redis->hmset('user:' . $uid, array(
 				'username' => $_POST['username'],
 				'email'    => $_POST['email'],
 				'password' => crypt($_POST['password'], '$2y$11$' . String::random(22) . '$'),
@@ -49,15 +59,14 @@ class user_create extends AnonymousModule
 			));
 
 			// Sets the UID mappings
-			$user->setMapping('username', $_POST['username'], $uid);
-			$user->setMapping('email',    $_POST['email'],    $uid);
+			$this->redis->mset(array_combine($mapping_fields, array($uid, $uid)));
 
 			// Sets a cookie with the UID and auth token
 			setcookie('__auth', base64_encode($uid . '|' . $auth_token), time() + Time::YEAR, '/');
 
 			return array('status' => 'success', 'url' => '/');
 		}
-		catch (RedisException $e)
+		catch (Exception $e)
 		{
 			return array('error' => $e->getMessage());
 		}
