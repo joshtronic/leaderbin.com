@@ -27,7 +27,7 @@ class User extends RedisModel
 		return false;
 	}
 
-	public static function getCookie()
+	public function getCookie()
 	{
 		if (isset($_COOKIE['__auth']))
 		{
@@ -39,9 +39,10 @@ class User extends RedisModel
 
 	public static function isAuthenticated()
 	{
-		if ($cookie = self::getCookie())
+		$user = new self();
+
+		if ($cookie = $user->getCookie())
 		{
-			$user       = new self();
 			$auth_token = $user->getAuth($cookie['uid']);
 
 			return $auth_token === $cookie['token'];

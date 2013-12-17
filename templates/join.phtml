@@ -4,33 +4,37 @@
 	echo $this->html->div(
 		array('class' => 'form-group'),
 		$this->html->inputEmail(array(
-			'label'       => 'Email Address',
-			'name'        => 'email',
-			'class'       => 'form-control input-lg email required',
-			'placeholder' => 'Your email address, double check it!',
+			'label'        => 'Email Address',
+			'name'         => 'email',
+			'class'        => 'form-control input-lg email required',
+			'placeholder'  => 'Your email address, double check it!',
+			'autocomplete' => 'off',
+			'autofocus'    => 'autofocus',
 		))
 	);
 
 	echo $this->html->div(
 		array('class' => 'form-group'),
 		$this->html->input(array(
-			'label'       => 'Username',
-			'name'        => 'username',
-			'class'       => 'form-control input-lg required',
-			'minlength'   => 4,
-			'maxlength'   => 50,
-			'placeholder' => 'At least four letters or numbers',
+			'label'        => 'Username',
+			'name'         => 'username',
+			'class'        => 'form-control input-lg required',
+			'minlength'    => 4,
+			'maxlength'    => 50,
+			'placeholder'  => 'At least four letters or numbers',
+			'autocomplete' => 'off',
 		))
 	);
 
 	echo $this->html->div(
 		array('class' => 'form-group'),
 		$this->html->inputPassword(array(
-			'label'       => 'Password',
-			'name'        => 'password',
-			'class'       => 'form-control input-lg required',
-			'minlength'   => 8,
-			'placeholder' => 'Use symbols along with letters and numbers',
+			'label'        => 'Password',
+			'name'         => 'password',
+			'class'        => 'form-control input-lg required',
+			'minlength'    => 8,
+			'placeholder'  => 'Use symbols along with letters and numbers',
+			'autocomplete' => 'off',
 		))
 	);
 	?>

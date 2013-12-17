@@ -7,6 +7,8 @@ class logout extends UserModule
 		$user = new User();
 		$user->setAuth($user->getAuthenticated('uid'), $user->generateToken());
 
+		setcookie('__auth', '', time() - Time::YEAR, '/');
+
 		Browser::goHome();
 	}
 }
