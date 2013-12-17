@@ -3,6 +3,7 @@
 		<h1>My Leaderboards</h1>
 	</div>
 	<div class="col-xs-12 col-sm-6 text-right">
+		<br>
 		<a class="btn btn-success" href="/leaderboard/new">New Leaderboard</a>
 	</div>
 </div>
@@ -10,7 +11,25 @@
 <?php
 if ($this->module['leaderboards'])
 {
+	echo '<table class="table table-striped table-responsive">';
+	echo '<thead><tr><th>UID</th><th>Name</th><th>Last Activity</th><th></th></tr></thead><tbody>';
 
+	foreach ($this->module['leaderboards'] as $uid => $updated_at)
+	{
+		?>
+		<tr class="lead">
+			<td><?php echo $uid; ?></td>
+			<td><?php echo $this->module['names'][$uid]; ?></td>
+			<td><?php echo Time::ago($updated_at); ?></td>
+			<td class="text-right">
+				<a class="btn btn-danger" href="/leaderboard/delete/<?php echo $uid; ?>">Delete</a>
+				<a class="btn btn-primary" href="/leaderboard/edit/<?php echo $uid; ?>">Edit</a>
+			</td>
+		</tr>
+		<?php
+	}
+
+	echo '</tbody></table>';
 }
 else
 {

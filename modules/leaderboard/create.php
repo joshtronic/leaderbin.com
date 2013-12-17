@@ -25,7 +25,7 @@ class leaderboard_create extends leaderboard_new
 			$uid = $this->redis->incr($uid_key);
 		}
 
-		$timestamp = Time::timestamp();
+		$timestamp = time();
 
 		// Creates the rest of the data for the leaderboard
 		$this->redis->multi()
