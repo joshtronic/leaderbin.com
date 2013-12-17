@@ -19,7 +19,7 @@ if ($this->module['leaderboards'])
 		?>
 		<tr class="lead">
 			<td><?php echo $uid; ?></td>
-			<td><?php echo $this->module['names'][$uid]; ?></td>
+			<td><a href="/leaderboard/<?php echo $uid; ?>"><?php echo $this->module['names'][$uid]; ?></a></td>
 			<td><?php echo Time::ago($updated_at); ?></td>
 			<td class="text-right">
 				<a class="btn btn-danger" href="/leaderboard/delete/<?php echo $uid; ?>">Delete</a>
