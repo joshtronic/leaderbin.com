@@ -2,7 +2,6 @@
 
 class login extends AnonymousModule
 {
-
 }
 
 ?>
