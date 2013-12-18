@@ -11,14 +11,17 @@ class CustomModule extends Module
 
 		$this->redis = new CustomRedis();
 
-		if (isset($_COOKIE['__auth']))
+		if (substr(get_class($this), 0, 3) != 'api')
 		{
-			list($uid, $auth_token) = explode('|', base64_decode($_COOKIE['__auth']));
-
-			if ($this->redis->hget('user:' . $uid, 'auth') === $auth_token)
+			if (isset($_COOKIE['__auth']))
 			{
-				$this->uid           = $uid;
-				$this->return['uid'] = $uid;
+				list($uid, $auth_token) = explode('|', base64_decode($_COOKIE['__auth']));
+
+				if ($this->redis->hget('user:' . $uid, 'auth') === $auth_token)
+				{
+					$this->uid           = $uid;
+					$this->return['uid'] = $uid;
+				}
 			}
 		}
 	}

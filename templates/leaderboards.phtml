@@ -22,15 +22,14 @@ if ($this->module['leaderboards'])
 		</tr></thead>
 		<tbody>
 			<?php
-			foreach ($this->module['leaderboards'] as $uid => $updated_at)
+			foreach ($this->module['leaderboards'] as $uid => $data)
 			{
-				$data = $this->module['data'][$uid];
 				?>
 				<tr class="lead">
 					<td><?php echo $uid; ?></td>
 					<td><a href="/leaderboard/<?php echo $uid; ?>"><?php echo $data['name']; ?></a></td>
 					<td><?php echo Time::ago($data['created_at']); ?></td>
-					<td><?php echo Time::ago($updated_at); ?></td>
+					<td><?php echo Time::ago($data['updated_at']); ?></td>
 					<td class="text-right">
 						<div class="btn-group">
 							<a class="btn btn-danger" href="/leaderboard/delete/<?php echo $uid; ?>">Delete</a>

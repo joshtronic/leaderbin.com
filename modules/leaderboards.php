@@ -6,27 +6,37 @@ class leaderboards extends UserModule
 	{
 		// Grabs the user's leaderboards
 		$leaderboards = $this->redis->zrevrange('user:' . $this->uid . ':leaderboards:updated', 0, -1, 'WITHSCORES');
-		$data         = array();
 
 		if ($leaderboards)
 		{
 			$this->redis->multi();
 
-			$leaderboard_uids = array();
-
+			// Grabs the additional fields
 			foreach ($leaderboards as $uid => $updated_at)
 			{
-				$leaderboard_uids[] = $uid;
+				unset($leaderboards[$uid]);
+				$leaderboards[(int)$uid] = $updated_at;
+
 				$this->redis->hmget('leaderboard:' . $uid, array('name', 'created_at'));
 			}
 
-			$data = array_combine($leaderboard_uids, $this->redis->exec());
+			$fields = $this->redis->exec();
+
+			foreach ($leaderboards as $uid => $updated_at)
+			{
+				$data = current($fields);
+
+				$leaderboards[$uid] = array(
+					'name'       => $data['name'],
+					'created_at' => (int)$data['created_at'],
+					'updated_at' => (int)$updated_at,
+				);
+
+				next($fields);
+			}
 		}
 
-		return array(
-			'leaderboards' => $leaderboards,
-			'data'         => $data,
-		);
+		return array('leaderboards' => $leaderboards);
 	}
 }
 
