@@ -12,7 +12,7 @@ class leaderboard_create extends leaderboard_new
 
 	public function __default()
 	{
-		// Checks the current UID value
+		// Grabs the next UID
 		$uid_key = 'leaderboard:uid';
 
 		if ($this->redis->get($uid_key) === false)
@@ -26,10 +26,15 @@ class leaderboard_create extends leaderboard_new
 		}
 
 		$timestamp = time();
+		$record    = array(
+			'name'       => $_POST['name'],
+			'uid'        => $this->uid,
+			'created_at' => $timestamp,
+		);
 
 		// Creates the rest of the data for the leaderboard
 		$this->redis->multi()
-			->hmset('leaderboard:' . $uid, array('name' => $_POST['name'], 'uid' => $this->uid))
+			->hmset('leaderboard:' . $uid, $record)
 			->zadd('user:' . $this->uid . ':leaderboards:updated', $timestamp, $uid)
 			->zadd('leaderboards:updated', $timestamp, $uid)
 			->exec();

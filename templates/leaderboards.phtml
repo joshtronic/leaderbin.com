@@ -11,25 +11,39 @@
 <?php
 if ($this->module['leaderboards'])
 {
-	echo '<table class="table table-striped table-responsive">';
-	echo '<thead><tr><th>UID</th><th>Name</th><th>Last Activity</th><th></th></tr></thead><tbody>';
-
-	foreach ($this->module['leaderboards'] as $uid => $updated_at)
-	{
-		?>
-		<tr class="lead">
-			<td><?php echo $uid; ?></td>
-			<td><a href="/leaderboard/<?php echo $uid; ?>"><?php echo $this->module['names'][$uid]; ?></a></td>
-			<td><?php echo Time::ago($updated_at); ?></td>
-			<td class="text-right">
-				<a class="btn btn-danger" href="/leaderboard/delete/<?php echo $uid; ?>">Delete</a>
-				<a class="btn btn-primary" href="/leaderboard/edit/<?php echo $uid; ?>">Edit</a>
-			</td>
-		</tr>
-		<?php
-	}
-
-	echo '</tbody></table>';
+	?>
+	<table class="table table-striped table-responsive">
+		<thead><tr>
+			<th>UID</th>
+			<th>Name</th>
+			<th>Created</th>
+			<th>Last Activity</th>
+			<th></th>
+		</tr></thead>
+		<tbody>
+			<?php
+			foreach ($this->module['leaderboards'] as $uid => $updated_at)
+			{
+				$data = $this->module['data'][$uid];
+				?>
+				<tr class="lead">
+					<td><?php echo $uid; ?></td>
+					<td><a href="/leaderboard/<?php echo $uid; ?>"><?php echo $data['name']; ?></a></td>
+					<td><?php echo Time::ago($data['created_at']); ?></td>
+					<td><?php echo Time::ago($updated_at); ?></td>
+					<td class="text-right">
+						<div class="btn-group">
+							<a class="btn btn-danger" href="/leaderboard/delete/<?php echo $uid; ?>">Delete</a>
+							<a class="btn btn-primary" href="/leaderboard/edit/<?php echo $uid; ?>">Edit</a>
+						</div>
+					</td>
+				</tr>
+				<?php
+			}
+			?>
+		</tbody>
+	</table>
+	<?php
 }
 else
 {

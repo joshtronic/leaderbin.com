@@ -6,7 +6,7 @@ class leaderboards extends UserModule
 	{
 		// Grabs the user's leaderboards
 		$leaderboards = $this->redis->zrevrange('user:' . $this->uid . ':leaderboards:updated', 0, -1, 'WITHSCORES');
-		$names        = array();
+		$data         = array();
 
 		if ($leaderboards)
 		{
@@ -17,15 +17,15 @@ class leaderboards extends UserModule
 			foreach ($leaderboards as $uid => $updated_at)
 			{
 				$leaderboard_uids[] = $uid;
-				$this->redis->hget('leaderboard:' . $uid, 'name');
+				$this->redis->hmget('leaderboard:' . $uid, array('name', 'created_at'));
 			}
 
-			$names = array_combine($leaderboard_uids, $this->redis->exec());
+			$data = array_combine($leaderboard_uids, $this->redis->exec());
 		}
 
 		return array(
 			'leaderboards' => $leaderboards,
-			'names'        => $names,
+			'data'         => $data,
 		);
 	}
 }
