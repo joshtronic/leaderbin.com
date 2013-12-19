@@ -11,7 +11,9 @@ class CustomModule extends Module
 
 		$this->redis = new CustomRedis();
 
-		if (substr(get_class($this), 0, 3) != 'api')
+		$class = get_class($this);
+
+		if ($class == 'api' || substr($class, 0, 3) != 'api')
 		{
 			if (isset($_COOKIE['__auth']))
 			{
