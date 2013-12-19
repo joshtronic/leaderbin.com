@@ -14,7 +14,8 @@ class api_v1_leaderboard extends APIv1
 				throw new Exception('Missing UID.');
 			}
 
-			$leaderboard_key = 'leaderboard:' . $_GET['uid'];
+			$leaderboard_uid = $_GET['uid'];
+			$leaderboard_key = 'leaderboard:' . $leaderboard_uid;
 
 			// Checks that the UID is valid and belongs to the key
 			$leaderboard = $this->redis->hgetall($leaderboard_key);
@@ -75,35 +76,44 @@ class api_v1_leaderboard extends APIv1
 						$this->redis->zadd($leaderboard_key . ':' . $suffix, $_POST['score'], $_POST['member']);
 					}
 
-					$this->redis->exec();
+					$timestamp = time();
+
+					foreach (array('', 'user:' . $this->uid . ':') as $prefix)
+					{
+						$this->redis->zadd($prefix . 'leaderboards:updated', $timestamp, $leaderboard_uid);
+					}
 					break;
 
 				// Increments a score of a member
 				case 'PUT':
-					// Hack because _PUT doesn't exist in PHP land
-					parse_str(file_get_contents("php://input"), $_PUT);
-
 					$increment = 1;
 
-					if (!isset($_PUT['member']))
+					if (!isset($_REQUEST['member']))
 					{
 						throw new Exception('Missing member.');
 					}
-					elseif (isset($_PUT['value']))
+					elseif (isset($_REQUEST['value']))
 					{
-						if (!preg_match('/^-?\d+$/', $_PUT['value']))
+						if (!preg_match('/^-?\d+$/', $_REQUEST['value']))
 						{
 							throw new Exception('Value must be an integer.');
 						}
 
-						$increment = $_PUT['value'];
+						$increment = $_REQUEST['value'];
 					}
 
 					$this->redis->multi();
 
 					foreach ($suffixes as $suffix)
 					{
-						$this->redis->zincrby($leaderboard_key . ':' . $suffix, $increment, $_PUT['member']);
+						$this->redis->zincrby($leaderboard_key . ':' . $suffix, $increment, $_REQUEST['member']);
+					}
+
+					$timestamp = time();
+
+					foreach (array('', 'user:' . $this->uid . ':') as $prefix)
+					{
+						$this->redis->zadd($prefix . 'leaderboards:updated', $timestamp, $leaderboard_uid);
 					}
 
 					$this->redis->exec();

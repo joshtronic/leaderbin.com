@@ -29,15 +29,14 @@ class APIv1 extends CustomModule
 			if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 			{
 				parse_str(file_get_contents("php://input"), $_PUT);
+				$_REQUEST = array_merge($_REQUEST, $_PUT);
 			}
 
-			if (isset($_REQUEST['key']) || isset($_PUT['key']))
+			if (isset($_REQUEST['key']))
 			{
-				$api_key = isset($_PUT['key']) ? $_PUT['key'] : $_REQUEST['key'];
-
-				if (strlen($api_key) == 40)
+				if (strlen($_REQUEST['key']) == 40)
 				{
-					$uid = $this->redis->get('user:api:' . $api_key);
+					$uid = $this->redis->get('user:api:' . $_REQUEST['key']);
 
 					if ($uid)
 					{
