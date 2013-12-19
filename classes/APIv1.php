@@ -11,8 +11,11 @@ class APIv1 extends CustomModule
 		$response_code = 200;
 		$error         = 'An unexcepted error has occurred.';
 
+		echo($_SERVER['REQUEST_METHOD']);
+		print_r($this->request_methods);
+
 		// Checks the request method
-		if ((is_array($this->request_methods) && !in_array($this->request_methods, $_SERVER['REQUEST_METHOD']))
+		if ((is_array($this->request_methods) && !in_array($_SERVER['REQUEST_METHOD'], $this->request_methods))
 			|| $this->request_methods != $_SERVER['REQUEST_METHOD'])
 		{
 			$response_code = 400;

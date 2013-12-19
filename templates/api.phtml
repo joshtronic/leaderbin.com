@@ -48,28 +48,14 @@ if ($this->module['api_key'])
 
 <h4>GET</h4>
 
-<p class="lead">Returns the members, scores and ranks sorted in descending order by score.</p>
+<p class="lead">Returns the members, scores and ranks sorted in descending order by score. <span class="label label-primary">{uid}</span> corresponds with the UID of the leaderboards which can be found on the <a href="/leaderboards" target="_blank">My Leaderboards</a> page.</p>
 
-<p class="lead"><span class="label label-primary">{uid}</span> corresponds with the UID found on the <a href="/leaderboards" target="_blank">My Leaderboards</a> page.</p>
-
-<h3>/leaderboard/{uid}/member/{member}</h3>
-
-<p class="lead">The value of <span class="label label-primary">{member}</span> is a unique indicator you are using in your system. It can be anything you want it to be as long as it’s unique within your system.</p>
-
-<p class="lead">We highly recommend using something that won’t change in the future like an auto incremented field from your database.</p>
-
-<h4>GET</h4>
-
-<p class="lead">Returns the score and rank for the <span class="label label-primary">{member}</span> specified.</p>
+<p class="lead">Optionally the results can be filtered by <span class="label label-primary">member</span> where <span class="label label-primary">member</span> is a unique value that maps back to your system. We highly recommend using something that won’t change in the future like an auto incremented field from your database.</p>
 
 <h4>POST</h4>
 
-<p class="lead">Allows you set the score of the <span class="label label-primary">{member}</span> by passing the <span class="label label-primary">{score}</span> parameter.</p>
-
-<p class="lead">The required <span class="label label-primary">score</span> parameter must be an integer.</p>
+<p class="lead">Allows you set the score of a <span class="label label-primary">member</span> by passing the <span class="label label-primary">score</span> parameter. The required <span class="label label-primary">score</span> parameter must be an integer.</p>
 
 <h4>PUT</h4>
 
-<p class="lead">Allows you to increment the score of the specified <span class="label label-primary">{member}</span> by 1 point. If the <span class="label label-primary">{member}</span> does not exist, the score will be be set to 1 point. If you would like to increase by more than one or decrement the score, include the <span class="label label-primary">value</span> parameter.</p>
-
-<p class="lead">The optional <span class="label label-primary">value</span> parameter must be an integer.</p>
+<p class="lead">Allows you to increment the score of a <span class="label label-primary">member</span> by 1 point. If the <span class="label label-primary">member</span> does not exist, the score will be be set to 1 point. If you would like to increase by more than one or decrement the score you can include the <span class="label label-primary">value</span> parameter. The optional <span class="label label-primary">value</span> parameter must be an integer.</p>
