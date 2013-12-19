@@ -26,11 +26,18 @@ class APIv1 extends CustomModule
 		// Checks the key
 		try
 		{
-			if (isset($_REQUEST['key']))
+			if ($_SERVER['REQUEST_METHOD'] == 'PUT')
 			{
-				if (strlen($_REQUEST['key']) == 40)
+				parse_str(file_get_contents("php://input"), $_PUT);
+			}
+
+			if (isset($_REQUEST['key']) || isset($_PUT['key']))
+			{
+				$api_key = isset($_PUT['key']) ? $_PUT['key'] : $_REQUEST['key'];
+
+				if (strlen($api_key) == 40)
 				{
-					$uid = $this->redis->get('user:api:' . $_REQUEST['key']);
+					$uid = $this->redis->get('user:api:' . $api_key);
 
 					if ($uid)
 					{
