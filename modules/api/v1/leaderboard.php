@@ -11,7 +11,7 @@ class api_v1_leaderboard extends APIv1
 			// Checks if we have a UID
 			if (!isset($_GET['uid']))
 			{
-				throw new Exception('Missing UID.');
+				throw new Exception('You must supply a leaderboard UID.');
 			}
 
 			$leaderboard_uid = $_GET['uid'];
@@ -22,12 +22,12 @@ class api_v1_leaderboard extends APIv1
 
 			if (!$leaderboard)
 			{
-				throw new Exception('Leaderboard UID does not exist.');
+				throw new Exception('Leaderboard does not exist.');
 			}
 
 			if ($this->uid != $leaderboard['uid'])
 			{
-				throw new Exception('Leaderboard UID does not belong to you.');
+				throw new Exception('Leaderboard does not belong to you.');
 			}
 
 			// Sets up our key suffixes
@@ -122,7 +122,8 @@ class api_v1_leaderboard extends APIv1
 		}
 		catch (Exception $e)
 		{
-			return array('response_code' => 400, 'error' => $e->getMessage());
+			$this->response_code = 400;
+			$this->error         = $e->getMessage();
 		}
 	}
 }

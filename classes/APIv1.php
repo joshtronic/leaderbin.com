@@ -90,6 +90,11 @@ class APIv1 extends CustomModule
 	{
 		// Unsure why I had to put this here, I guess it's being overridden somewhere in PICKLES
 		header('Content-type: application/json');
+
+		if (isset($this->return['response_code']))
+		{
+			Browser::status($this->return['response_code']);
+		}
 	}
 }
 

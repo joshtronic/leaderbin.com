@@ -6,9 +6,12 @@ class api_v1_leaderboards extends APIv1
 
 	public function __default()
 	{
-		$leaderboards = new leaderboards();
+		if (!isset($this->return['error']))
+		{
+			$leaderboards = new leaderboards();
 
-		return $leaderboards->__default();
+			return $leaderboards->__default();
+		}
 	}
 }
 
