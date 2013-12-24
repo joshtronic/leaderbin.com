@@ -94,6 +94,12 @@ $config = array(
 		'name'   => 'LeaderBin',
 		'domain' => 'leaderbin.com',
 	),
+	'api' => array(
+		'ayah' => array(
+			'publisher_key' => '12605450c23a1a6cff00b387ffe673dd9d2a27fe',
+			'scoring_key'   => '79b499385530453f43026ec58347564bbc08b8c2',
+		),
+	),
 );
 
 ?>
