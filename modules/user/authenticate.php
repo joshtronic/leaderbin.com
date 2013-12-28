@@ -26,9 +26,8 @@ class user_authenticate extends AnonymousModule
 			if ($user['password'] == crypt($_POST['password'], $user['password']))
 			{
 				setcookie('__auth', base64_encode($uid . '|' . $user['auth']), time() + Time::YEAR, '/');
+				return array('status' => 'success', 'url' => '/leaderboards');
 			}
-
-			return array('status' => 'success', 'url' => '/leaderboards');
 		}
 
 		return array('error' => 'Invalid email address or password.');
