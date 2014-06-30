@@ -35,6 +35,13 @@ if ($this->module['api_key'])
 
 <p class="lead"><span class="label label-primary"><?php echo $url; ?>{endpoint}?key={key}</span> where <span class="label label-primary">{endpoint}</span> is the call being made and <span class="label label-primary">{key}</span> is your API key.</p>
 
+<h2>Results</h2>
+
+<p class="lead">The <?php echo $site; ?> API only returns a JSON formatted string and utilizes both HTTP status codes as well as a <span class="label label-primary">response_code</span> variable in the results. On error, there will also be a <span class="label label-primary">error</span> variable that will contain additional information about the error that was encountered.</p>
+
+<h3>Pretty Print</h3>
+
+<p class="lead">To help with readability of the returned JSON we offer the <span class="label label-primary">pretty</span> parameter which will force the JSON output to be prettified. Simply add <span class="label label-primary">&amp;pretty=true</span> after your <span class="label label-primary">key</span> to use this parameter.</p>
 
 <h2>Endpoints</h2>
 

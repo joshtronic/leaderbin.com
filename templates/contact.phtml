@@ -1,0 +1,47 @@
+
+<form role="form" class="row col-xs-12 col-sm-6 col-sm-offset-3" method="post" action="/contact/send">
+	<?php
+	if (isset($_GET['success']))
+	{
+		?>
+		<br><div class="alert alert-success">Your message has been sent!</div>
+		<?php
+	}
+	?>
+	<h1>Get in touch</h1>
+	<?php
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->inputEmail(array(
+			'label' => 'Email Address',
+			'name'  => 'email',
+			'class' => 'form-control input-lg email required',
+		))
+	);
+
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->input(array(
+			'label'     => 'Subject',
+			'name'      => 'subject',
+			'class'     => 'form-control input-lg required',
+			'minlength' => 10,
+		))
+	);
+
+	echo $this->html->div(
+		array('class' => 'form-group'),
+		$this->html->textarea(array(
+			'label'       => 'Message',
+			'name'        => 'message',
+			'class'       => 'form-control input-lg required',
+			'minlength'   => 10,
+			'placeholder' => 'Bonus points for keeping it under 140 character.',
+			'rows'        => 5,
+		))
+	);
+
+	echo API_AYAH::getHTML() . '<br>';
+	?>
+	<button type="submit" class="btn btn-success btn-lg">Send Message</button>
+</form>
