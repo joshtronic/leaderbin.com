@@ -27,7 +27,7 @@ class api_v1_leaderboard extends APIv1
 
 			if ($this->uid != $leaderboard['uid'])
 			{
-				throw new Exception('Leaderboard UID does not belong to you.');
+				throw new Exception('Leaderboard does not belong to you.');
 			}
 
 			// Sets up our key suffixes
