@@ -2,15 +2,15 @@
 
 class user_authenticate extends AnonymousModule
 {
-	protected $ajax     = true;
-	protected $method   = 'POST';
-	protected $validate = array(
+	public $ajax     = true;
+	public $method   = 'POST';
+	public $validate = array(
 		'email' => array(
-			'length:>:100' => 'Invalid email address or password.',
+			'length:<:100' => 'Invalid email address or password.',
 			'filter:email' => 'Invalid email address or password.',
 		),
 		'password' => array(
-			'length:<:8'   => 'Invalid email address or password.',
+			'length:>:8'   => 'Invalid email address or password.',
 		),
 	);
 

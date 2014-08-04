@@ -68,7 +68,7 @@ $config = array(
 			'redis' => array(
 				'type'      => 'redis',
 				'hostname'  => '127.0.0.1',
-				'port'      => 6381,
+				'port'      => 6380,
 				'database'  => '0',
 				'namespace' => 'lb',
 			),

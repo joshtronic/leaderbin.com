@@ -2,11 +2,11 @@
 
 class leaderboard_create extends leaderboard_new
 {
-	protected $ajax     = true;
-	protected $method   = 'POST';
-	protected $validate = array(
+	public $ajax     = true;
+	public $method   = 'POST';
+	public $validate = array(
 		'name' => array(
-			'length:>:100' => 'Leaderboard name may not be more than 100 characters.',
+			'length:<:100' => 'Leaderboard name may not be more than 100 characters.',
 		),
 	);
 

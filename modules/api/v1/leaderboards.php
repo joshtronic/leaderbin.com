@@ -2,7 +2,7 @@
 
 class api_v1_leaderboards extends APIv1
 {
-	protected $request_methods = 'GET';
+	public $request_methods = 'GET';
 
 	public function __default()
 	{
